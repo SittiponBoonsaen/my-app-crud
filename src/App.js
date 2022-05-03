@@ -87,7 +87,7 @@ function App() {
           </div>
           <div className="mb-3">
             <label htmlFor="age" className="form-label">
-              Age:
+              Age2:
             </label>
             <input
               type="number"
