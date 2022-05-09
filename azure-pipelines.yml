@@ -10,20 +10,11 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: NodeTool@0
+- task: Npm@1
   inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
-
-- task: DotNetCoreCLI@2
+    command: 'install'
+- task: PublishBuildArtifacts@1
   inputs:
-    command: publish
-    publishWebProjects: True
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: True
-
-# this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'myWebsiteName'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/test123'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
