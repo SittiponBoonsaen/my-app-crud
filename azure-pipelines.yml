@@ -15,12 +15,15 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
-- task: PublishBuildArtifacts@1
-  displayName: "Publish as artifact"
+- task: DotNetCoreCLI@2
   inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+
+# this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'myWebsiteName'
